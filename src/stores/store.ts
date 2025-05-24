@@ -3,7 +3,7 @@ import AuthState from "../configuration/authSlice";
 
 export const store = configureStore({
   reducer: {
-    auth: AuthState,
+    auth: AuthState.reducer,
   },
 });
 
