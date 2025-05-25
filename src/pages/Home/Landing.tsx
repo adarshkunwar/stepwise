@@ -1,9 +1,9 @@
 import { ArrowRight } from "lucide-react";
 import Page from "../../components/ui/Page";
 import { SubTitle, Text, Title } from "../../components/ui/Typography";
-import Button from "../../components/ui/Button";
+import { CustomLink } from "../../components/ui/Link";
 
-const MinimalHabitTrackerLanding = () => {
+const Landing = () => {
   return (
     <Page title="Home">
       <div className="max-w-4xl mx-auto text-center">
@@ -11,7 +11,9 @@ const MinimalHabitTrackerLanding = () => {
         <div className="space-y-12">
           <div className="space-y-8">
             <Title>Sano Paila</Title>
-            <Title color="text-gray-400">One Step at a time</Title>
+            <Title level={2} color="text-gray-400">
+              One Step at a time
+            </Title>
             <SubTitle>
               The Journey of the thousand miles, begins with a single step
             </SubTitle>
@@ -19,10 +21,10 @@ const MinimalHabitTrackerLanding = () => {
 
           {/* CTA */}
           <div className="space-y-6">
-            <Button>
+            <CustomLink link="/sign-up">
               Start tracking
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </Button>
+            </CustomLink>
 
             <Text>Free forever</Text>
           </div>
@@ -32,4 +34,4 @@ const MinimalHabitTrackerLanding = () => {
   );
 };
 
-export default MinimalHabitTrackerLanding;
+export default Landing;

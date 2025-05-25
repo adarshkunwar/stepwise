@@ -1,15 +1,19 @@
 import { Suspense } from "react";
 import { RouteList } from "./RouteList";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LoginPage from "../../pages/Auth/Login";
+import RegisterPage from "../../pages/Auth/Register";
 
 const MainRoute = () => {
   return (
     <>
       <BrowserRouter>
         <Suspense fallback={<div>Loading...</div>}>
-          {/* safe routes */}
-
           <Routes>
+            {/* safe routes */}
+            <Route path={`/login`} element={<LoginPage />} />
+            <Route path={`/sign-up`} element={<RegisterPage />} />
+
             {/* guarded routes */}
             {RouteList.map((route) => {
               const Component = route.component;
