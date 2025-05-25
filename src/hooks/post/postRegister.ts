@@ -57,6 +57,7 @@ const usePostAuthRegister = () => {
       dispatch(
         setAuthToken({
           token: data.data.token,
+          isAuthenticated: true,
           user: data.data.user.user_id,
         })
       );

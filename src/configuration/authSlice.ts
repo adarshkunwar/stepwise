@@ -5,6 +5,9 @@ import type { AuthState } from "../types/Auth";
 const initialState: AuthState = {
   token: encryptedLocalStorage.getItem("token") ?? null,
   user: encryptedLocalStorage.getItem("user") ?? null,
+  isAuthenticated:
+    !!encryptedLocalStorage.getItem("token") &&
+    !!encryptedLocalStorage.getItem("user"),
 };
 
 const TokenSlice = createSlice({
@@ -15,17 +18,19 @@ const TokenSlice = createSlice({
       const { token, user } = action.payload;
       if (token !== undefined) {
         state.token = token;
-        encryptedLocalStorage.setItem("accessToken", token || "");
+        encryptedLocalStorage.setItem("token", token || "");
       }
       if (user !== undefined) {
         state.user = user;
         encryptedLocalStorage.setItem("user", JSON.stringify(user));
       }
+      state.isAuthenticated = !!token && !!user;
     },
 
     clearAuthToken: (state) => {
       state.token = null;
       state.user = null;
+      state.isAuthenticated = false;
       try {
         encryptedLocalStorage.removeItem("token");
         encryptedLocalStorage.removeItem("user");

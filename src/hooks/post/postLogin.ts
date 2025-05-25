@@ -56,6 +56,7 @@ const usePostAuthLogin = () => {
         setAuthToken({
           token: data.data.token,
           user: data.data.user.user_id,
+          isAuthenticated: true,
         })
       );
       toast.success("Logged in!");
