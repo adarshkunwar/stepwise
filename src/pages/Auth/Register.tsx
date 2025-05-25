@@ -4,6 +4,7 @@ import { SubTitle, Text, Title } from "../../components/ui/Typography";
 import Input from "../../components/form/Input";
 import { Button } from "../../components/ui/Button";
 import { SimpleLink } from "../../components/ui/Link";
+import usePostAuthRegister from "../../hooks/post/postRegister";
 
 interface Inputs {
   full_name: string;
@@ -13,6 +14,8 @@ interface Inputs {
 }
 
 const RegisterPage = () => {
+  const { mutate } = usePostAuthRegister();
+
   const {
     register,
     handleSubmit,
@@ -20,6 +23,7 @@ const RegisterPage = () => {
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
+    mutate(data);
   };
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
@@ -69,7 +73,7 @@ const RegisterPage = () => {
               <span className="text-gray-400 font-light pr-2">
                 Already have an account?
               </span>
-              <SimpleLink link="/sign-up" underline>
+              <SimpleLink link="/login" underline>
                 Sign in
               </SimpleLink>
             </Text>

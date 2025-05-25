@@ -6,6 +6,7 @@ import Checkbox from "../../components/form/Checkbox";
 import { SimpleLink } from "../../components/ui/Link";
 import { SubTitle, Text, Title } from "../../components/ui/Typography";
 import { Button } from "../../components/ui/Button";
+import usePostAuthLogin from "../../hooks/post/postLogin";
 
 interface Inputs {
   email: string;
@@ -15,13 +16,15 @@ interface Inputs {
 const LoginPage = () => {
   const [isRememberMeActivated, setIsRememberMeActivated] = useState(false);
 
+  const { mutate } = usePostAuthLogin();
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+    mutate(data);
   };
 
   return (
