@@ -1,8 +1,8 @@
 import React from "react";
-import { SidebarList } from "./SidebarList";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../stores/store";
+import { RouteList } from "../../../lib/Routes/RouteList";
 
 type SidebarNavigtionProps = {
   setActiveItem: React.Dispatch<React.SetStateAction<number>>;
@@ -13,8 +13,6 @@ type SidebarNavigtionProps = {
 
 const SidebarNavigtion: React.FC<SidebarNavigtionProps> = ({
   activeItem,
-  logout,
-  navigate,
   setActiveItem,
 }) => {
   const { isLeftBarOpen } = useSelector((state: RootState) => state.slidebar);
@@ -22,8 +20,7 @@ const SidebarNavigtion: React.FC<SidebarNavigtionProps> = ({
   return (
     <nav className="flex-1 overflow-y-auto p-2">
       <ul className="space-y-2">
-        {SidebarList.map((item, index) => {
-          const isLogoutItem = item.sidebarItem === "Logout";
+        {RouteList.filter((route) => route.showOnSidebar).map((item, index) => {
           const itemClass = `
           flex items-center p-3 ${
             isLeftBarOpen ? "justify-center" : "space-x-3"
@@ -35,33 +32,14 @@ const SidebarNavigtion: React.FC<SidebarNavigtionProps> = ({
           `;
           return (
             <li key={index}>
-              {isLogoutItem ? (
-                <div
-                  onClick={() => {
-                    logout();
-                    navigate("/login");
-                    setActiveItem(index);
-                  }}
-                  className={itemClass}
-                >
-                  <span className="text-xl">{item.sidebarIcon}</span>
+              <Link to={item.path}>
+                <div onClick={() => setActiveItem(index)} className={itemClass}>
+                  <span className="text-xl">{item.icon}</span>
                   {!isLeftBarOpen && (
-                    <span className="font-medium">{item.sidebarItem}</span>
+                    <span className="font-medium">{item.path}</span>
                   )}
                 </div>
-              ) : (
-                <Link to={item.sidebarPath}>
-                  <div
-                    onClick={() => setActiveItem(index)}
-                    className={itemClass}
-                  >
-                    <span className="text-xl">{item.sidebarIcon}</span>
-                    {!isLeftBarOpen && (
-                      <span className="font-medium">{item.sidebarItem}</span>
-                    )}
-                  </div>
-                </Link>
-              )}
+              </Link>
             </li>
           );
         })}

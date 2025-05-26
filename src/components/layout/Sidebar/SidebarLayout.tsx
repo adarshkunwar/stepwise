@@ -16,7 +16,7 @@ const SidebarLayout = () => {
       <aside
         className={`${
           isLeftBarOpen ? "w-16" : "w-64"
-        } dark:bg-gray-800 dark:text-white bg-gray-100 text-gray-800 transition-all duration-300 ease-in-out flex flex-col relative`}
+        } bg-sidebar transition-all duration-300 ease-in-out flex flex-col relative`}
       >
         <LogoHeader />
         <SidebarNavigtion
@@ -31,12 +31,10 @@ const SidebarLayout = () => {
       <div className=" w-screen h-screen flex">
         <main
           className={` overflow-auto bg-white delay-100 flex-1 ${
-            isLeftBarOpen ? "translate-x-32" : "translate-x-10"
-          } p-4`}
+            isLeftBarOpen ? "translate-x-0" : " translate-x-32"
+          }`}
         >
-          <div className="max-w-2xl ">
-            <Outlet />
-          </div>
+          <Outlet />
         </main>
       </div>
     </div>

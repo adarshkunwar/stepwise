@@ -2,8 +2,21 @@ import { ArrowRight } from "lucide-react";
 import Page from "../../components/ui/Page";
 import { SubTitle, Text, Title } from "../../components/ui/Typography";
 import { CustomLink } from "../../components/ui/Link";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../stores/store";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
+
   return (
     <Page title="Home">
       <div className="max-w-4xl mx-auto text-center">

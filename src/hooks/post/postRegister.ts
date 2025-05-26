@@ -62,7 +62,7 @@ const usePostAuthRegister = () => {
         })
       );
       toast.success("Registration successful!");
-      navigate("/");
+      navigate("/dashboard");
     },
   });
 };

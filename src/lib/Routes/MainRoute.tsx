@@ -6,6 +6,7 @@ import RegisterPage from "../../pages/Auth/Register";
 import AuthGuard from "./AuthGuard";
 import LoadingPage from "../../pages/Loading";
 import SidebarLayout from "../../components/layout/Sidebar/SidebarLayout";
+import Landing from "../../pages/Home/Landing";
 
 const MainRoute = () => {
   return (
@@ -15,9 +16,9 @@ const MainRoute = () => {
           {/* public routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/sign-up" element={<RegisterPage />} />
+          <Route path="/" element={<Landing />} />
 
           {/* guarded routes */}
-
           <Route path="/" element={<SidebarLayout />}>
             <Route path="/" element={<AuthGuard />}>
               {RouteList.map((route) => {

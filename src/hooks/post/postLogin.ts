@@ -59,7 +59,7 @@ const usePostAuthLogin = () => {
         })
       );
       toast.success("Logged in!");
-      navigate("/");
+      navigate("/dashboard");
     },
   });
 };

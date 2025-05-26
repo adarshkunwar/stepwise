@@ -6,10 +6,10 @@ type CheckboxProps = {
 
 const Checkbox = ({ label, checked, onChange }: CheckboxProps) => {
   return (
-    <label className="flex items-center space-x-2 text-gray-400 font-light">
+    <label className="flex items-center space-x-3 cursor-pointer text-gray-400 font-light">
       <input
         type="checkbox"
-        className="rounded border-gray-800"
+        className="form-checkbox h-5 w-5 text-indigo-600 bg-gray-800 border-gray-600 rounded"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
       />
