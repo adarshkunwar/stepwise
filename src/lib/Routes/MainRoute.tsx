@@ -5,6 +5,7 @@ import LoginPage from "../../pages/Auth/Login";
 import RegisterPage from "../../pages/Auth/Register";
 import AuthGuard from "./AuthGuard";
 import LoadingPage from "../../pages/Loading";
+import SidebarLayout from "../../components/layout/Sidebar/SidebarLayout";
 
 const MainRoute = () => {
   return (
@@ -16,20 +17,21 @@ const MainRoute = () => {
           <Route path="/sign-up" element={<RegisterPage />} />
 
           {/* guarded routes */}
-          {RouteList.map((route) => {
-            const Component = route.component;
-            return (
-              <Route
-                key={route.name}
-                path={route.path}
-                element={
-                  <AuthGuard>
-                    <Component />
-                  </AuthGuard>
-                }
-              />
-            );
-          })}
+
+          <Route path="/" element={<SidebarLayout />}>
+            <Route path="/" element={<AuthGuard />}>
+              {RouteList.map((route) => {
+                const Component = route.component;
+                return (
+                  <Route
+                    key={route.name}
+                    path={route.path}
+                    element={<Component />}
+                  />
+                );
+              })}
+            </Route>
+          </Route>
         </Routes>
       </Suspense>
     </BrowserRouter>

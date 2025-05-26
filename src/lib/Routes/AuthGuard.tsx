@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import type { RootState } from "../../stores/store";
-import type { JSX } from "react";
 
-const AuthGuard = ({ children }: { children: JSX.Element }) => {
+const AuthGuard = () => {
   const { isAuthenticated, token } = useSelector(
     (state: RootState) => state.auth
   );
@@ -14,7 +13,7 @@ const AuthGuard = ({ children }: { children: JSX.Element }) => {
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  return <Outlet />;
 };
 
 export default AuthGuard;

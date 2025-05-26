@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import AuthState from "../configuration/authSlice";
+import SlidebarState from "../configuration/slidebarSlice";
+import ModelState from "../configuration/ModelSlice";
 
 export const store = configureStore({
   reducer: {
     auth: AuthState,
+    slidebar: SlidebarState,
+    model: ModelState,
   },
 });
 

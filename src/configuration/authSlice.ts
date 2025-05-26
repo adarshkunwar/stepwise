@@ -24,7 +24,7 @@ const TokenSlice = createSlice({
         state.user = user;
         encryptedLocalStorage.setItem("user", JSON.stringify(user));
       }
-      state.isAuthenticated = !!token && !!user;
+      state.isAuthenticated = !!state.token && !!state.user;
     },
 
     clearAuthToken: (state) => {
