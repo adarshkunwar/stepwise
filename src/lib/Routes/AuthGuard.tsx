@@ -7,8 +7,6 @@ const AuthGuard = () => {
     (state: RootState) => state.auth
   );
 
-  console.log(isAuthenticated);
-
   if (!isAuthenticated || !token) {
     return <Navigate to="/login" replace />;
   }

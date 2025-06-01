@@ -4,7 +4,11 @@ import type { AuthState } from "../types/Auth";
 
 const initialState: AuthState = {
   token: encryptedLocalStorage.getItem("token") ?? null,
-  user: encryptedLocalStorage.getItem("user") ?? null,
+  user: (() => {
+    const stored = encryptedLocalStorage.getItem("user");
+    return stored ? JSON.parse(stored) : null;
+  })(),
+  hasProfile: !!localStorage.getItem("hasProfile"),
   isAuthenticated:
     !!encryptedLocalStorage.getItem("token") &&
     !!encryptedLocalStorage.getItem("user"),
@@ -25,6 +29,7 @@ const TokenSlice = createSlice({
         encryptedLocalStorage.setItem("user", JSON.stringify(user));
       }
       state.isAuthenticated = !!state.token && !!state.user;
+      state.hasProfile = !!state.hasProfile;
     },
 
     clearAuthToken: (state) => {

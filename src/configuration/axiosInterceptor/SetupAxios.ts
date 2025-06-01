@@ -3,10 +3,8 @@ import axios, {
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from "axios";
-import { type RootState } from "../../stores/store";
-import { useDispatch, useSelector } from "react-redux";
+import { type RootState, store } from "../../stores/store";
 import { clearAuthToken } from "../authSlice";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export const AxiosInstance = axios.create({
@@ -17,37 +15,53 @@ export const AxiosInstance = axios.create({
   },
 });
 
-axios.interceptors.request.use(
+// Request interceptor
+AxiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const state = useSelector((state: RootState) => state?.auth);
-    const { token } = state;
+    console.log("Request interceptor called");
+
+    // Get token directly from store instead of using useSelector
+    const state = store.getState() as RootState;
+    const token = state?.auth?.token;
+
+    console.log(token, "token");
 
     if (token) {
-      config.headers.set({
-        ...config.headers,
-        Authorization: `Bearer ${token}`,
-      });
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
     return config;
   },
   (error: AxiosError) => {
+    console.log("Request error interceptor called");
     return Promise.reject(error);
   }
 );
 
-axios.interceptors.response.use(
-  (response: AxiosResponse) => response,
+// Response interceptor
+AxiosInstance.interceptors.response.use(
+  (response: AxiosResponse) => {
+    console.log("Response interceptor called - success");
+    return response;
+  },
   (error: AxiosError) => {
-    const navigate = useNavigate();
+    console.log("Response interceptor called - error", error.response?.status);
+
     if (error.response?.status === 401) {
-      const dispatch = useDispatch();
+      // Dispatch directly to store instead of using useDispatch
+      store.dispatch(clearAuthToken());
       toast.error("Your session has expired. Please login again");
-      dispatch(clearAuthToken());
+
+      // Redirect to login page
+      window.location.href = "/";
     } else if (error.response?.status === 403) {
       toast.error("You do not have permission to perform this action.");
-      navigate("/");
+      // Redirect to home page
+
+      store.dispatch(clearAuthToken());
+      // window.location.href = "/";
     }
+
     return Promise.reject(error);
   }
 );

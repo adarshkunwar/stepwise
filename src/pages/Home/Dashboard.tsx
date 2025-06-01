@@ -1,7 +1,9 @@
 import { CustomLink } from "../../components/ui/Link";
 import { Title, SubTitle, Text } from "../../components/ui/Typography";
+import useGetUserDetails from "../../hooks/get/getUserDetails";
 
 const DashboardPage = () => {
+  useGetUserDetails();
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
       <div className="max-w-xl mx-auto text-center space-y-6">

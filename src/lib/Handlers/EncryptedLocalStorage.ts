@@ -1,7 +1,6 @@
 import CryptoJS from "crypto-js";
 
 const SECRET_KEY = import.meta.env.VITE_ENCRYPTED_KEY;
-console.log(SECRET_KEY, "jkkjkjk");
 
 export const encryptedLocalStorage = {
   getItem(key: string): string | null {
