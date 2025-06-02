@@ -1,39 +1,35 @@
-import React from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AbsoluteModal from "../model/AbsoluteModal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { RootState } from "../../../stores/store";
-import { closeModel, openModel } from "../../../configuration/ModelSlice";
+import useGetUserDetails from "../../../hooks/get/getUserDetails";
 
 const SidebarFooter = () => {
   const { isLeftBarOpen } = useSelector((state: RootState) => state.slidebar);
-  const { isOpen } = useSelector((state: RootState) => state.model);
   const navigate = useNavigate();
-  const footerRef = React.useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
-  const profile = {
-    name: "John Doe", // Replace with actual profile data
-    image: null, // Replace with actual profile image URL or null if not available
-  };
+  const footerRef = useRef<HTMLDivElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const profile = useGetUserDetails();
 
   const handleLoginModal = () => {
-    dispatch(
-      openModel(
-        <AbsoluteModal open={isOpen} onClose={() => dispatch(closeModel())}>
-          <div className="p-6">
-            <p className="text-gray-700">
-              Please log in to access your profile.
-            </p>
-            <button
-              className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-              onClick={() => navigate("/login")}
-            >
-              Go to Login
-            </button>
-          </div>
-        </AbsoluteModal>
-      )
-    );
+    <AbsoluteModal
+      open={isModalOpen}
+      onClose={() => {
+        setIsModalOpen(false);
+      }}
+    >
+      <div className="p-6">
+        <p className="text-gray-700">Please log in to access your profile.</p>
+        <button
+          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          onClick={() => navigate("/login")}
+        >
+          Go to Login
+        </button>
+      </div>
+    </AbsoluteModal>;
   };
 
   return (
@@ -54,7 +50,9 @@ const SidebarFooter = () => {
             />
           ) : (
             <div className="w-full h-full bg-blue-500 flex items-center justify-center text-white font-bold">
-              {profile?.name ? profile.name.charAt(0).toUpperCase() : "User"}
+              {profile?.user?.full_name
+                ? profile?.user?.full_name.charAt(0).toUpperCase()
+                : "User"}
             </div>
           )}
         </div>

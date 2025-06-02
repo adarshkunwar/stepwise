@@ -26,11 +26,12 @@ const useGetUserDetails = () => {
     queryKey: ["Profile"],
     queryFn: () => Get({ user: user ?? "" }),
     enabled: !!user,
+    staleTime: Infinity,
   });
 
   useEffect(() => {
     const hasProfile = profileData?.userAnswers?.length > 0;
-    console.log(hasProfile);
+    console.log(hasProfile, "hasProfile");
     if (profileData) {
       dispatch(setAuthToken({ hasProfile }));
     }

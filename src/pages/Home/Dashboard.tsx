@@ -1,10 +1,12 @@
+import { useSelector } from "react-redux";
 import { CustomLink } from "../../components/ui/Link";
 import { Title, SubTitle, Text } from "../../components/ui/Typography";
-import useGetUserDetails from "../../hooks/get/getUserDetails";
+import type { RootState } from "../../stores/store";
 
 const DashboardPage = () => {
-  useGetUserDetails();
-  return (
+  const { hasProfile } = useSelector((state: RootState) => state.auth);
+
+  return !hasProfile ? (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
       <div className="max-w-xl mx-auto text-center space-y-6">
         <Title level={3}>Dashboard</Title>
@@ -21,6 +23,8 @@ const DashboardPage = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <>has profile</>
   );
 };
 

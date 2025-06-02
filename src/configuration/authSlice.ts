@@ -19,7 +19,7 @@ const TokenSlice = createSlice({
   initialState,
   reducers: {
     setAuthToken: (state, action: PayloadAction<AuthState>) => {
-      const { token, user } = action.payload;
+      const { token, user, hasProfile } = action.payload;
       if (token !== undefined) {
         state.token = token;
         encryptedLocalStorage.setItem("token", token || "");
@@ -29,7 +29,7 @@ const TokenSlice = createSlice({
         encryptedLocalStorage.setItem("user", JSON.stringify(user));
       }
       state.isAuthenticated = !!state.token && !!state.user;
-      state.hasProfile = !!state.hasProfile;
+      state.hasProfile = !!hasProfile;
     },
 
     clearAuthToken: (state) => {

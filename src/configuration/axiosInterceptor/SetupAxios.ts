@@ -48,18 +48,14 @@ AxiosInstance.interceptors.response.use(
     console.log("Response interceptor called - error", error.response?.status);
 
     if (error.response?.status === 401) {
-      // Dispatch directly to store instead of using useDispatch
       store.dispatch(clearAuthToken());
       toast.error("Your session has expired. Please login again");
 
-      // Redirect to login page
       window.location.href = "/";
     } else if (error.response?.status === 403) {
       toast.error("You do not have permission to perform this action.");
-      // Redirect to home page
 
       store.dispatch(clearAuthToken());
-      // window.location.href = "/";
     }
 
     return Promise.reject(error);
