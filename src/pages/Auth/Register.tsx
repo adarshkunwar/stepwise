@@ -23,7 +23,10 @@ const RegisterPage = () => {
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
-    mutate(data);
+    mutate({
+      ...data,
+      role: "user",
+    });
   };
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">

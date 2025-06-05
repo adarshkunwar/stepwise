@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { CustomLink } from "../../components/ui/Link";
 import { Title, SubTitle, Text } from "../../components/ui/Typography";
 import type { RootState } from "../../stores/store";
+import Page from "../../components/ui/Page";
 
 const DashboardPage = () => {
   const { hasProfile } = useSelector((state: RootState) => state.auth);
@@ -24,7 +25,16 @@ const DashboardPage = () => {
       </div>
     </div>
   ) : (
-    <>has profile</>
+    <>
+      <Page pageTitle="Dashboard">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <Title level={3}>Dashboard</Title>
+            <SubTitle>Welcome "User" 👋</SubTitle>
+          </div>
+        </div>
+      </Page>
+    </>
   );
 };
 

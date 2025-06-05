@@ -10,6 +10,7 @@ type PayloadProps = {
   full_name: string;
   email: string;
   password: string;
+  role: string;
   confirm_password: string;
 };
 
